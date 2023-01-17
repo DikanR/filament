@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 
 
 class ReportResource extends Resource
@@ -30,7 +31,7 @@ class ReportResource extends Resource
             ->schema([
                 TextInput::make('issue')->required(),
                 TextInput::make('detail')->required(),
-                FileUpload::make('attachment')->multiple(),
+                FileUpload::make('attachment')->required(),
                 TextInput::make('email')->email()->required()
             ]);
     }
@@ -39,10 +40,10 @@ class ReportResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('issue')->required(),
-                TextColumn::make('detail')->required(),
-                TextColumn::make('attachment')->required(),
-                TextColumn::make('email')->email()->required()
+                TextColumn::make('issue'),
+                TextColumn::make('detail'),
+                ImageColumn::make('attachment'),
+                TextColumn::make('email')
             ])
             ->filters([
                 //
