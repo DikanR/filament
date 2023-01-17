@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
-use App\Models\Customer;
+use App\Filament\Resources\ReportResource\Pages;
+use App\Filament\Resources\ReportResource\RelationManagers;
+use App\Models\Report;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,14 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CustomerResource extends Resource
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\TextColumn;
+
+
+class ReportResource extends Resource
 {
-    protected static ?string $model = Customer::class;
+    protected static ?string $model = Report::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -23,9 +28,10 @@ class CustomerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('email')->email()->required(),
-                Forms\Components\TextInput::make('address')->required()
+                TextInput::make('issue')->required(),
+                TextInput::make('detail')->required(),
+                FileUpload::make('attachment')->multiple(),
+                TextInput::make('email')->email()->required()
             ]);
     }
 
@@ -33,9 +39,10 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('address')
+                TextColumn::make('issue')->required(),
+                TextColumn::make('detail')->required(),
+                TextColumn::make('attachment')->required(),
+                TextColumn::make('email')->email()->required()
             ])
             ->filters([
                 //
@@ -58,9 +65,9 @@ class CustomerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'index' => Pages\ListReports::route('/'),
+            'create' => Pages\CreateReport::route('/create'),
+            'edit' => Pages\EditReport::route('/{record}/edit'),
         ];
     }    
 }
