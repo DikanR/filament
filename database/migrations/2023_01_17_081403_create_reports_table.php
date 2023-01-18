@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('issue');
             $table->string('detail');
-            $table->string('attachment');
             $table->string('email');
             $table->timestamps();
         });

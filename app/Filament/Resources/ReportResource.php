@@ -14,9 +14,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 
 
 class ReportResource extends Resource
@@ -31,7 +32,7 @@ class ReportResource extends Resource
             ->schema([
                 TextInput::make('issue')->required(),
                 TextInput::make('detail')->required(),
-                FileUpload::make('attachment')->required(),
+                SpatieMediaLibraryFileUpload::make('attachment'),
                 TextInput::make('email')->email()->required()
             ]);
     }
@@ -42,7 +43,7 @@ class ReportResource extends Resource
             ->columns([
                 TextColumn::make('issue'),
                 TextColumn::make('detail'),
-                ImageColumn::make('attachment'),
+                SpatieMediaLibraryImageColumn::make('attachment'),
                 TextColumn::make('email')
             ])
             ->filters([
